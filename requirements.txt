@@ -1,0 +1,6 @@
+Flask
+gunicorn
+pytest
+bandit
+pip-audit
+
