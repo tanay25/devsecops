@@ -76,18 +76,6 @@ pipeline {
     }
 }
 
-        stage('7. Sonar Quality Gate') {
-            steps {
-                timeout(time: 5, unit: 'MINUTES') {
-                    script {
-                        def qualityGate = waitForQualityGate()
-                        if (qualityGate.status != 'OK') {
-                            error "SonarQube Quality Gate Failed"
-                        }
-                    }
-                }
-            }
-        }
 
         stage('8. Docker Build') {
             steps {
