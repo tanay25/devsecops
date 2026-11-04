@@ -58,18 +58,23 @@ pipeline {
         }
 
         stage('6. SonarQube Analysis') {
-            steps {
-                script {
-                    def scannerHome = tool 'SonarScanner'
+    steps {
+        script {
+            def scannerHome = tool 'SonarScanner'
 
-                    withSonarQubeEnv('sonarqube') {
-                        sh """
-                            ${scannerHome}/bin/sonar-scanner
-                        """
-                    }
-                }
+            withSonarQubeEnv('sonarqube') {
+                sh """
+                    ${scannerHome}/bin/sonar-scanner \
+                    -Dsonar.projectKey=flask-login-app \
+                    -Dsonar.projectName=Flask-Login-App \
+                    -Dsonar.sources=. \
+                    -Dsonar.python.version=3.12 \
+                    -Dsonar.exclusions=.venv/**,venv/**,**/__pycache__/**
+                """
             }
         }
+    }
+}
 
         stage('7. Sonar Quality Gate') {
             steps {
